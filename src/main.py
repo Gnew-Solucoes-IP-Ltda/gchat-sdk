@@ -1,3 +1,4 @@
+#!/usr/src/gchat/encerrar-chat/venv/bin/python
 from controllers import ChatController
 from providers.chatbot_provider import ChatBotProvider
 
