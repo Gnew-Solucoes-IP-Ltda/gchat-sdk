@@ -1,1 +1,1 @@
-from entities.chat import Chat
+from entities.chat import Chat, Contact
