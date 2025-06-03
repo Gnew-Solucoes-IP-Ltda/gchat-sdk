@@ -10,10 +10,7 @@ class ChatBotProvider:
     
     def get_chats(self, status:int, type_chat: int, page: int=0) -> requests.Response:
         url = f'{self.base_url}/core/v2/api/chats/list'
-        headers = {
-            'access-token': self.access_token,
-            'Content-Type': 'application/json'
-        }
+        headers = self._get_token()
         data = {
             'status': status,
             'typeChat': type_chat,
@@ -26,12 +23,9 @@ class ChatBotProvider:
         )
         return response
     
-    def finalize_chat(self, chat_id: str, send_message_finalized: bool=True) -> requests.Response:
+    def finish_chat(self, chat_id: str, send_message_finalized: bool=True) -> requests.Response:
         url = f'{self.base_url}/core/v2/api/chats/{chat_id}/finalize'
-        headers = {
-            'access-token': self.access_token,
-            'Content-Type': 'application/json'
-        }
+        headers = self._get_token()
         data = {
             'sendMessageFinalized': send_message_finalized,
             'fidelityUser': False,
@@ -46,10 +40,7 @@ class ChatBotProvider:
 
     def send_template(self, numero: str, template_id: str) -> requests.Response:
         url = f'{self.base_url}/core/v2/api/chats/send-template'
-        headers = {
-            'access-token': self.access_token,
-            'Content-Type': 'application/json'
-        }
+        headers = self._get_token()
         data = {
             "forceSend": True,
             "number": numero,
@@ -62,3 +53,36 @@ class ChatBotProvider:
             headers=headers
         )
         return response
+    
+    def send_message(self, contact_id: str, message: str) -> requests.Response: 
+        url = f'{self.base_url}/core/v2/api/chats/send-text'
+        headers = self._get_token()
+        data = {
+            "contactId": contact_id,
+            "forceSend": True,
+            "isWhisper": False,
+            "verifyContact": False,
+            "message": message    
+        }
+        response = requests.post(
+            url,
+            data=json.dumps(data),
+            headers=headers,
+        )
+        return response
+    
+    def get_contact(self, number: str) -> requests.Response:
+        url = f'{self.base_url}/core/v2/api/contacts/number/{number}'
+        headers = self._get_token()
+        response = requests.get(
+            url,
+            headers=headers
+        )
+        return response
+        
+    def _get_token(self) -> dict:
+        return {
+            'access-token': self.access_token,
+            'Content-Type': 'application/json'
+        }
+        

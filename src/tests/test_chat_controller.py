@@ -20,7 +20,7 @@ class ChatControllerTestCase(TestCase):
             provider,
             get_limit_date
         ) 
-        chats = controller.get_chats_without_response(hours=2, is_me=False)
+        chats = controller.get_chats_without_response(value_time=2, is_me=False)
         self.assertEqual(len(chats), 6)
     
     def test_get_chats_without_response_is_me(self):
@@ -29,16 +29,19 @@ class ChatControllerTestCase(TestCase):
             provider,
             get_limit_date
         ) 
-        chats = controller.get_chats_without_response(hours=2, is_me=True)
+        chats = controller.get_chats_without_response(value_time=2, is_me=True)
         self.assertEqual(len(chats), 8)
     
-    def test_finalize_chats(self):
+    def test_finish_chats(self):
         provider = ProviderMagicMock()
         controller = ChatController(
             provider,
             get_limit_date
         ) 
-        chats = controller.get_chats_without_response(hours=2, is_me=False)
-        result = controller.finalize_chats(chats)
+        result = controller.finish_chats(
+            end_attendants_last_message=False,
+            end_contacts_last_message=True,
+            timeout=2
+        )
         self.assertEqual(len(result['success']), 5)
         self.assertEqual(len(result['fail']), 1)
