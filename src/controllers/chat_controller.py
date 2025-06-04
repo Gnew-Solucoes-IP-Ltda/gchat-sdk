@@ -35,6 +35,11 @@ class ChatController:
         
         return chats
     
+    def alert_chats(self, alert_time_in_hour: int) -> dict:
+        result = {'success': [], 'fail': []}
+        chats = self.get_chats_without_response(value_time=alert_time_in_hour, is_me=False)
+        print(chats)
+        
     def finish_chats(self, end_attendants_last_message: bool, end_contacts_last_message: bool, timeout: int) -> dict:
         chats = []
         request_executed = False

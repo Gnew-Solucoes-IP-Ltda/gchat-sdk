@@ -1,6 +1,6 @@
 from unittest import TestCase
 from controllers import ChatController
-from .utils import ProviderMagicMock, get_limit_date
+from .utils import ProviderMagicMock, ProviderSendMessageMagicMock, get_limit_date
 
  
 class ChatControllerTestCase(TestCase):
@@ -45,3 +45,17 @@ class ChatControllerTestCase(TestCase):
         )
         self.assertEqual(len(result['success']), 5)
         self.assertEqual(len(result['fail']), 1)
+    
+    def test_alert_chats(self):
+        provider = ProviderSendMessageMagicMock()
+        controller = ChatController(
+            provider,
+            get_limit_date
+        )
+        dados = controller.get_manual_open_chats()
+        print(dados)
+        
+        for chat in dados:
+            print(chat.id, chat.last_message_date, chat.is_me)
+            
+        result = controller.alert_chats(alert_time_in_hour=0.1) 

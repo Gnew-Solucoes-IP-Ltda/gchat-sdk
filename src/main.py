@@ -2,6 +2,7 @@
 from controllers import ChatController
 from providers.chatbot_provider import ChatBotProvider
 from settings import (
+    ALERT_TIME,
     END_CHATS_WITH_ATTENDANTS_LAST_MESSAGE,
     END_CHATS_WITH_CONTACTS_LAST_MESSAGE,
     TIMEOUT,
