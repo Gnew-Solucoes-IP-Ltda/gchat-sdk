@@ -1,6 +1,7 @@
 from entities import Chat
 from factories import get_chat_instance
 from providers.chatbot_provider import ChatBotProvider
+from settings import ALERT_MESSAGE_TEXT
 from utils import get_limit_date
 
 
@@ -36,10 +37,24 @@ class ChatController:
         return chats
     
     def alert_chats(self, alert_time_in_hour: int) -> dict:
+        chats = []
+        request_executed = False
         result = {'success': [], 'fail': []}
         chats = self.get_chats_without_response(value_time=alert_time_in_hour, is_me=False)
-        print(chats)
         
+        while len(chats) != 0 or request_executed == False:
+            chats.extend(self.get_chats_without_response(value_time=alert_time_in_hour, is_me=False))
+            data = self._send_message(chats)
+            result['success'].extend(data['success'])
+            result['fail'].extend(data['fail'])
+
+            if len(chats) == 0:
+                request_executed = True
+
+            chats = []
+        
+        return result
+                
     def finish_chats(self, end_attendants_last_message: bool, end_contacts_last_message: bool, timeout: int) -> dict:
         chats = []
         request_executed = False
@@ -62,7 +77,8 @@ class ChatController:
                 request_executed = True
 
             chats = []
-            return result
+            
+        return result
 
     def _finish_chats(self, chats: list[Chat]) -> dict:
         sucess = []
@@ -72,6 +88,26 @@ class ChatController:
             response = self._chatbot_provider.finish_chat(chat.id)
             
             if response.status_code == 200:
+                sucess.append(chat.id)
+            
+            else:
+                fail.append(chat.id)
+            
+        return {    
+            'success': sucess,
+            'fail': fail
+        }
+    
+    def _send_message(self, chats: list[Chat]) -> dict:
+        sucess = []
+        fail = []
+        message = ALERT_MESSAGE_TEXT
+
+        for chat in chats:
+            contact = chat.contact
+            response = self._chatbot_provider.send_message(contact.id, message)
+            
+            if response.status_code == 202:
                 sucess.append(chat.id)
             
             else:
