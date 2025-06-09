@@ -1,7 +1,13 @@
 import pytz
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock
-from .constants import CHAT_DATA_SEND_MESSAGE_TEST, CHAT_DATA, CONTACT_DATA, SEND_MESSAGE_RESPONSE
+from .constants import (
+    CHAT_DATA_SEND_MESSAGE_TEST, 
+    CHAT_DATA_SEND_MESSAGE_WITH_ALERT_TEST,
+    CHAT_DATA, 
+    CONTACT_DATA, 
+    SEND_MESSAGE_RESPONSE
+)
 
 
 contact_mock = MagicMock()
@@ -55,6 +61,10 @@ class BaseProviderMagicMock(MagicMock):
 class ProviderSendMessageMagicMock(BaseProviderMagicMock):
     _chat_data = CHAT_DATA_SEND_MESSAGE_TEST
 
+
+class ProviderSendMessageWithAlertMagicMock(BaseProviderMagicMock):
+    _chat_data = CHAT_DATA_SEND_MESSAGE_WITH_ALERT_TEST
+    
     
 class ProviderMagicMock(BaseProviderMagicMock): ...
 

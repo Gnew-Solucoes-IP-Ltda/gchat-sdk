@@ -15,13 +15,18 @@ class ChatController:
         self._chatbot_provider = chatbot_provider
         self._get_limit_date = func_get_limit_date
     
-    def get_chats_without_response(self, value_time: int, is_me=True) -> list[Chat]:
+    def get_chats_without_response(self, value_time: int, is_me=True, alert_message=False) -> list[Chat]:
         response_date_limit = self._get_limit_date(value_time)
-        return [
-            chat
-            for chat in self.get_manual_open_chats()
-            if chat.is_me == is_me and chat.last_message_date < response_date_limit
-        ] 
+        chats = []
+        
+        for chat in self.get_manual_open_chats():
+            if chat.is_me == is_me and chat.last_message_date < response_date_limit:
+                if alert_message and  ALERT_MESSAGE_TEXT in chat.last_message:
+                    continue
+                
+                chats.append(chat)
+        
+        return chats
 
     def get_manual_open_chats(self) -> list[Chat]:
         response = self._chatbot_provider.get_chats(status=2, type_chat=1)
@@ -40,10 +45,9 @@ class ChatController:
         chats = []
         request_executed = False
         result = {'success': [], 'fail': []}
-        chats = self.get_chats_without_response(value_time=alert_time_in_hour, is_me=False)
         
         while len(chats) != 0 or request_executed == False:
-            chats.extend(self.get_chats_without_response(value_time=alert_time_in_hour, is_me=False))
+            chats.extend(self.get_chats_without_response(value_time=alert_time_in_hour, is_me=True, alert_message=True))
             data = self._send_message(chats)
             result['success'].extend(data['success'])
             result['fail'].extend(data['fail'])
