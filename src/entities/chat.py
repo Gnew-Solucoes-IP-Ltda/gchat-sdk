@@ -12,9 +12,10 @@ class Contact:
 
 class Chat:
     
-    def __init__(self, id: str, last_message_date: str, is_me: bool, contact: Contact):
+    def __init__(self, id: str, last_message_date: str, last_message: str, is_me: bool, contact: Contact):
         self.id = id
         self.last_message_date = self._date_converter(last_message_date)
+        self.last_message = last_message
         self.is_me = is_me
         self.contact = contact
 
