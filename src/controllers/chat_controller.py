@@ -90,7 +90,7 @@ class ChatController:
             data = self._finish_chats(chats)
             result['success'].extend(data['success'])
             result['fail'].extend(data['fail'])
-
+            
             if len(chats) == 0:
                 request_executed = True
 
