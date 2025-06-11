@@ -15,7 +15,9 @@ class ChatTestCase(TestCase):
             is_me=False,
             contact=contact_mock
         )
-        expected_date = datetime.fromisoformat('2025-04-15T16:27:16').replace(tzinfo=pytz.timezone("America/Sao_Paulo"))
+        expected_date = datetime.fromisoformat('2025-04-15T16:27:16')
+        tzinfo = pytz.timezone("America/Sao_Paulo")
+        expected_date = tzinfo.localize(expected_date)
         self.assertEqual(chat.id, '67fea56f0b473cc94365c920')
         self.assertEqual(chat.last_message_date, expected_date)
         self.assertEqual(chat.last_message, 'Test message')
