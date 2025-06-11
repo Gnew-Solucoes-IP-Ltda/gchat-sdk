@@ -8,7 +8,7 @@ class ChatBotProvider:
         self.base_url = base_url
         self.access_token = access_token
     
-    def get_chats(self, status:int, type_chat: int, page: int=0) -> requests.Response:
+    def get_chats(self, status:int, type_chat: int, page: int=1) -> requests.Response:
         url = f'{self.base_url}/core/v2/api/chats/list'
         headers = self._get_token()
         data = {

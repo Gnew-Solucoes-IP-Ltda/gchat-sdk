@@ -16,9 +16,11 @@ provider = ChatBotProvider(
     access_token=TOKEN_API
 )
 controller = ChatController(provider)
-data = controller.finish_chats(
-    END_CHATS_WITH_ATTENDANTS_LAST_MESSAGE, 
-    END_CHATS_WITH_CONTACTS_LAST_MESSAGE, 
-    TIMEOUT
-)
-print(data)
+data = controller.alert_chats(alert_time_in_hour=ALERT_TIME)
+print('send message alert', data)
+# data = controller.finish_chats(
+#     END_CHATS_WITH_ATTENDANTS_LAST_MESSAGE, 
+#     END_CHATS_WITH_CONTACTS_LAST_MESSAGE, 
+#     TIMEOUT
+# )
+# print('closed chats', data)

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 from .constants import (
     CHAT_DATA_SEND_MESSAGE_TEST, 
     CHAT_DATA_SEND_MESSAGE_WITH_ALERT_TEST,
+    CHAT_DATA_SEND_MESSAGE_EXCEPTION_CONTACT_TEST,
     CHAT_DATA, 
     CONTACT_DATA, 
     SEND_MESSAGE_RESPONSE
@@ -21,7 +22,7 @@ class BaseProviderMagicMock(MagicMock):
     _send_message_response = SEND_MESSAGE_RESPONSE
     _chat_data = CHAT_DATA
     
-    def get_chats(self, status, type_chat):
+    def get_chats(self, status, type_chat, page):
         self.calls_number_to_api += 1
         data = {}
         
@@ -64,6 +65,10 @@ class ProviderSendMessageMagicMock(BaseProviderMagicMock):
 
 class ProviderSendMessageWithAlertMagicMock(BaseProviderMagicMock):
     _chat_data = CHAT_DATA_SEND_MESSAGE_WITH_ALERT_TEST
+
+
+class ProviderSendMessageWithAlertExceptionContactMagicMock(BaseProviderMagicMock):
+    _chat_data = CHAT_DATA_SEND_MESSAGE_EXCEPTION_CONTACT_TEST
     
     
 class ProviderMagicMock(BaseProviderMagicMock): ...
