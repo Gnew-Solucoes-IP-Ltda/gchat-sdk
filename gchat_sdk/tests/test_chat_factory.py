@@ -1,6 +1,6 @@
 from unittest import TestCase
-from entities import Chat
-from factories import get_chat_instance
+from gchat_sdk.entities.chat import Chat
+from gchat_sdk.factories.chat_factory import get_chat_instance
 
 
 class ChatFactoryTestCase(TestCase):

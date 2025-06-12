@@ -1,4 +1,4 @@
-from entities import Chat, Contact
+from gchat_sdk.entities import Chat, Contact
 
 
 def get_contact_instance(data: dict) -> Contact:

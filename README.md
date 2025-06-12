@@ -62,7 +62,7 @@ Run the example to send alerts and close inactive conversations:
 ```python
 import os
 from dotenv import load_dotenv
-from gchat_sdk.controllers import ChatController
+from gchat_sdk.controllers.chat_controller import ChatController
 from gchat_sdk.providers.chatbot_provider import ChatBotProvider
 
 

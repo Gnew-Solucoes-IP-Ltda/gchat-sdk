@@ -1,6 +1,6 @@
 from unittest import TestCase
-from controllers import ChatController
-from .utils import (
+from gchat_sdk.controllers.chat_controller import ChatController
+from gchat_sdk.tests.utils import (
     ProviderMagicMock, 
     ProviderSendMessageMagicMock, 
     ProviderSendMessageWithAlertMagicMock, 

@@ -1,11 +1,9 @@
 import os
 from dotenv import load_dotenv
 from gchat_sdk.controllers import ChatController
-from gchat_sdk.providers.chatbot_provider import ChatBotProvider
-
+from gchat_sdk.providers import ChatBotProvider
 
 load_dotenv()
-
 
 URL_API = os.environ.get('URL_API')
 TOKEN_API = os.environ.get('TOKEN_API')

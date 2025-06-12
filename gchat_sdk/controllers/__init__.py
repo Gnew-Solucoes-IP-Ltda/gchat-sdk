@@ -1,1 +1,1 @@
-from controllers.chat_controller import ChatController
+from gchat_sdk.controllers.chat_controller import ChatController

@@ -1,5 +1,3 @@
-pytz
-requests
-python-dotenv
-twine
-setuptools
+pytz==2025.2
+requests==2.32.4
+python-dotenv==1.1.0
