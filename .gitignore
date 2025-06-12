@@ -2,4 +2,12 @@ __pycache__/
 
 venv/
 
+build/
+
+dist/
+
+*.egg-info
+
 .env
+
+*.old
