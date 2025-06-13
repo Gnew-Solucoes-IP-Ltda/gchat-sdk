@@ -25,7 +25,7 @@ class ChatController:
             contact = chat.contact
             
             if chat.is_me == is_me and chat.last_message_date < response_date_limit:
-                if alert_message and  self._alert_message_text in chat.last_message:
+                if alert_message and  self._alert_message_text not in chat.last_message:
                     continue
                 
                 if self._test_contact_id:
@@ -33,7 +33,7 @@ class ChatController:
                         continue
                 
                 chats.append(chat)
-
+        
         return chats
 
     def get_manual_open_chats(self, page=1) -> list[Chat]:
@@ -83,7 +83,13 @@ class ChatController:
         while len(chats) != 0 or request_executed == False:
 
             if end_attendants_last_message:
-                chats.extend(self.get_chats_without_response(value_time=timeout, is_me=True))
+                chats.extend(
+                    self.get_chats_without_response(
+                        value_time=timeout, 
+                        is_me=True,
+                        alert_message=True
+                    )
+                )
             
             if end_contacts_last_message:
                 chats.extend(self.get_chats_without_response(value_time=timeout, is_me=False))
