@@ -1,3 +1,5 @@
+import re
+from unidecode import unidecode
 from gchat_sdk.entities import Chat
 from gchat_sdk.factories import get_chat_instance
 from gchat_sdk.providers.chatbot_provider import ChatBotProvider
@@ -25,7 +27,10 @@ class ChatController:
             contact = chat.contact
             
             if chat.is_me == is_me and chat.last_message_date < response_date_limit:
-                if alert_message and  self._alert_message_text not in chat.last_message:
+                if (
+                    alert_message and  
+                    self._remove_special_characters(self._alert_message_text) in self._remove_special_characters(chat.last_message)
+                ):
                     continue
                 
                 if self._test_contact_id:
@@ -142,3 +147,8 @@ class ChatController:
             'success': sucess,
             'fail': fail
         }
+    
+    def _remove_special_characters(self, text: str) -> str:
+        text = unidecode(text).lower()
+        text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
+        return text
