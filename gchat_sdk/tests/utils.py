@@ -5,6 +5,7 @@ from .constants import (
     CHAT_DATA_SEND_MESSAGE_TEST, 
     CHAT_DATA_SEND_MESSAGE_WITH_ALERT_TEST,
     CHAT_DATA_SEND_MESSAGE_EXCEPTION_CONTACT_TEST,
+    CHAT_ERROR_CLOSED,
     CHAT_DATA, 
     CONTACT_DATA, 
     SEND_MESSAGE_RESPONSE
@@ -46,7 +47,8 @@ class BaseProviderMagicMock(MagicMock):
             '67fe9d01d61e5036777e0ad6',
             '67fe867d3622f66e0b459f7c', 
             '67fe7df4867b172be47e5749', 
-            '67fe42291f1c597687e93642'
+            '67fe42291f1c597687e93642',
+            '685bde445f164d81562fc196'
         ]
 
         if chat_id in sucess_ids:
@@ -63,6 +65,9 @@ class ProviderSendMessageMagicMock(BaseProviderMagicMock):
     _chat_data = CHAT_DATA_SEND_MESSAGE_TEST
 
 
+class ProviderFinishErrorMagicMock(BaseProviderMagicMock):
+    _chat_data = CHAT_ERROR_CLOSED
+
 class ProviderSendMessageWithAlertMagicMock(BaseProviderMagicMock):
     _chat_data = CHAT_DATA_SEND_MESSAGE_WITH_ALERT_TEST
 
@@ -70,12 +75,17 @@ class ProviderSendMessageWithAlertMagicMock(BaseProviderMagicMock):
 class ProviderSendMessageWithAlertExceptionContactMagicMock(BaseProviderMagicMock):
     _chat_data = CHAT_DATA_SEND_MESSAGE_EXCEPTION_CONTACT_TEST
     
-    
 class ProviderMagicMock(BaseProviderMagicMock): ...
 
 
 def get_limit_date(hours: int) -> datetime:
     limit_date = datetime.strptime(
         "2025-04-15T19:43:38", "%Y-%m-%dT%H:%M:%S"
+    ).replace(tzinfo=pytz.timezone("America/Sao_Paulo")) - timedelta(hours=hours)
+    return limit_date
+
+def get_limit_date_1(hours: int) -> datetime:
+    limit_date = datetime.strptime(
+        "2025-06-25T10:04:38", "%Y-%m-%dT%H:%M:%S"
     ).replace(tzinfo=pytz.timezone("America/Sao_Paulo")) - timedelta(hours=hours)
     return limit_date

@@ -12,6 +12,26 @@ CONTACT_DATA = {
 }
 
 
+CHAT_ERROR_CLOSED = {
+    'chats': [
+        {
+            'attendanceId': '685bde445f164d81562fc196', 
+            'contact': {
+                'id':'6569d66fa3544ba92d2f0cf3',
+                'number':'5511997799298',
+                'name':'Tatianno Alves'
+            },
+            'lastMessage': {
+                'utcDhMessage': '2025-06-25T09:56:56.274', 
+                'text': '🔼 Bom dia', 
+                'sender': {
+                    'isMe': False
+                }
+            }
+        }
+    ]
+}
+
 CHAT_DATA_SEND_MESSAGE_EXCEPTION_CONTACT_TEST = {
     'chats': [
         {

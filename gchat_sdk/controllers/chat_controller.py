@@ -28,17 +28,27 @@ class ChatController:
         self._alert_message_text = alert_message_text
         self._get_limit_date = func_get_limit_date
     
-    def get_chats_without_response(self, value_time: int, is_me=True, alert_message=False, page=1) -> list[Chat]:
+    def get_chats_without_response(self, value_time: int, is_me=True, alert_message=False, discard_not_alert_message=False, page=1) -> list[Chat]:
         response_date_limit = self._get_limit_date(value_time)
         chats = []
         
         for chat in self.get_manual_open_chats(page):
             contact = chat.contact
+            alert_message_text = self._remove_special_characters(self._alert_message_text)
+            last_message_text = self._remove_special_characters(chat.last_message)
             
+            if discard_not_alert_message:
+                if alert_message_text not in last_message_text:
+                    continue
+                
+                else:
+                    chats.append(chat)
+                    continue
+                
             if chat.is_me == is_me and chat.last_message_date < response_date_limit:
                 if (
                     alert_message and  
-                    self._remove_special_characters(self._alert_message_text) in self._remove_special_characters(chat.last_message)
+                    alert_message_text in last_message_text
                 ):
                     continue
                 
@@ -89,7 +99,7 @@ class ChatController:
         result['fail'].extend(data['fail'])
         return result
                 
-    def finish_chats(self, end_attendants_last_message: bool, end_contacts_last_message: bool, timeout: int) -> dict:
+    def finish_chats(self, end_attendants_last_message: bool, end_contacts_last_message: bool, timeout: int, discard_not_alert_message=False) -> dict:
         chats = []
         request_executed = False
         result = {'success': [], 'fail': []}
@@ -101,7 +111,8 @@ class ChatController:
                     self.get_chats_without_response(
                         value_time=timeout, 
                         is_me=True,
-                        alert_message=True
+                        alert_message=True,
+                        discard_not_alert_message=discard_not_alert_message
                     )
                 )
             
