@@ -15,7 +15,7 @@ with open("README.md", "r") as arq:
 
 setup(
     name='gchat-sdk',
-    version='0.0.8',
+    version='0.0.10',
     license='MIT License',
     author='Tatianno Alves',
     long_description=readme,

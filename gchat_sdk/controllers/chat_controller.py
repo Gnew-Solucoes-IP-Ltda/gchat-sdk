@@ -1,3 +1,4 @@
+import logging
 import re
 from unidecode import unidecode
 from gchat_sdk.entities import Chat
@@ -5,6 +6,14 @@ from gchat_sdk.factories import get_chat_instance
 from gchat_sdk.providers.chatbot_provider import ChatBotProvider
 from gchat_sdk.utils import get_limit_date
 
+
+logging.basicConfig(
+    filename='chatbot.log',  
+    filemode='w',       
+    level=logging.INFO, 
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 class ChatController:
     _test_contact_id = None
@@ -119,9 +128,11 @@ class ChatController:
             
             if response.status_code == 200:
                 sucess.append(chat.id)
+                logging.info(f'Finish chat {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
             
             else:
                 fail.append(chat.id)
+                logging.info(f'Finish error {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
             
         return {    
             'success': sucess,
@@ -139,10 +150,12 @@ class ChatController:
             
             if response.status_code == 202:
                 sucess.append(chat.id)
+                logging.info(f'Send message {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
             
             else:
                 fail.append(chat.id)
-            
+                logging.error(f'Error message {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
+        
         return {    
             'success': sucess,
             'fail': fail
