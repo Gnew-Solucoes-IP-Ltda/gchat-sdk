@@ -81,11 +81,11 @@ class ProviderMagicMock(BaseProviderMagicMock): ...
 def get_limit_date(hours: int) -> datetime:
     limit_date = datetime.strptime(
         "2025-04-15T19:43:38", "%Y-%m-%dT%H:%M:%S"
-    ).replace(tzinfo=pytz.timezone("America/Sao_Paulo")) - timedelta(hours=hours)
+    ).astimezone(pytz.timezone("America/Sao_Paulo")) - timedelta(hours=hours)
     return limit_date
 
 def get_limit_date_1(hours: int) -> datetime:
     limit_date = datetime.strptime(
         "2025-06-25T10:04:38", "%Y-%m-%dT%H:%M:%S"
-    ).replace(tzinfo=pytz.timezone("America/Sao_Paulo")) - timedelta(hours=hours)
+    ).astimezone(pytz.timezone("America/Sao_Paulo")) - timedelta(hours=hours)
     return limit_date

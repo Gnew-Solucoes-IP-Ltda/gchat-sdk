@@ -9,7 +9,7 @@ from gchat_sdk.utils import get_limit_date
 
 logging.basicConfig(
     filename='chatbot.log',  
-    filemode='w',       
+    filemode='a',       
     level=logging.INFO, 
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
@@ -42,7 +42,10 @@ class ChatController:
                     continue
                 
                 else:
-                    chats.append(chat)
+
+                    if chat.last_message_date < response_date_limit:
+                        chats.append(chat)
+                    
                     continue
                 
             if chat.is_me == is_me and chat.last_message_date < response_date_limit:
