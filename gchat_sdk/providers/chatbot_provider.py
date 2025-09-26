@@ -23,6 +23,15 @@ class ChatBotProvider:
         )
         return response
     
+    def get_chat_by_id(self, chat_id: str) -> requests.Response:
+        url = f'{self.base_url}/core/v2/api/chats/{chat_id}'
+        headers = self._get_token()
+        response = requests.get(
+            url,
+            headers=headers,
+        )
+        return response
+    
     def finish_chat(self, chat_id: str, send_message_finalized: bool=True) -> requests.Response:
         url = f'{self.base_url}/core/v2/api/chats/{chat_id}/finalize'
         headers = self._get_token()
