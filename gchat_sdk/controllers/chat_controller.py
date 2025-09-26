@@ -12,7 +12,7 @@ logging.basicConfig(
     filemode='a',       
     level=logging.INFO, 
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    datefmt="%Y-%m-%d %H:%M:%S"
 )
 
 class ChatController:
@@ -142,11 +142,11 @@ class ChatController:
             
             if response.status_code == 200:
                 sucess.append(chat.id)
-                logging.info(f'Finish chat {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
+                logging.info(f'Finish chat {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime("%Y-%m-%d %H:%M:%S")} {chat.last_message} {chat.is_me}')
             
             else:
                 fail.append(chat.id)
-                logging.info(f'Finish error {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
+                logging.info(f'Finish error {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime("%Y-%m-%d %H:%M:%S")} {chat.last_message} {chat.is_me}')
             
         return {    
             'success': sucess,
@@ -164,11 +164,11 @@ class ChatController:
             
             if response.status_code == 202:
                 sucess.append(chat.id)
-                logging.info(f'Send message {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
+                logging.info(f'Send message {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime("%Y-%m-%d %H:%M:%S")} {chat.last_message} {chat.is_me}')
             
             else:
                 fail.append(chat.id)
-                logging.error(f'Error message {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime('%Y-%m-%d %H:%M:%S')} {chat.last_message} {chat.is_me}')
+                logging.error(f'Error message {chat.id} {chat.contact.name} {chat.contact.number} {chat.last_message_date.strftime("%Y-%m-%d %H:%M:%S")} {chat.last_message} {chat.is_me}')
         
         return {    
             'success': sucess,
