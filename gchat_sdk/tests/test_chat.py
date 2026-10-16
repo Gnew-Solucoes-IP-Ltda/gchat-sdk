@@ -2,7 +2,7 @@ import pytz
 from unittest import TestCase
 from datetime import datetime
 from gchat_sdk.entities.chat import Chat
-from .utils import contact_mock
+from gchat_sdk.tests.utils import contact_mock
 
 
 class ChatTestCase(TestCase):

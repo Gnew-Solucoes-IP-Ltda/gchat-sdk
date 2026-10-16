@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import find_packages, setup
 
 lib_folder = os.path.dirname(os.path.realpath(__file__))
 requirement_path = lib_folder + '/requirements.txt'
@@ -15,7 +15,7 @@ with open("README.md", "r") as arq:
 
 setup(
     name='gchat-sdk',
-    version='0.1.2',
+    version='0.2.0',
     license='MIT License',
     author='Tatianno Alves',
     long_description=readme,
@@ -23,4 +23,7 @@ setup(
     author_email='tferreiraalves@gmail.com',
     keywords='gchat chatbot sdk gnew',
     description=u'Gchat SDK for managing and closing conversations',
+    packages=find_packages(exclude=['gchat_sdk.tests', 'gchat_sdk.tests.*']),
+    install_requires=install_requires,
+    python_requires='>=3.9',
 )
