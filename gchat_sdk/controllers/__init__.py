@@ -1,1 +1,2 @@
 from gchat_sdk.controllers.chat_controller import ChatController
+from gchat_sdk.controllers.native_channel_controller import NativeChannelController

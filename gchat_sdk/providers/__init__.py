@@ -1,1 +1,2 @@
 from gchat_sdk.providers.chatbot_provider import ChatBotProvider
+from gchat_sdk.providers.native_channel_provider import NativeChannelProvider
